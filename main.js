@@ -48,13 +48,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // .catch(err => {
     //   console.error(`Not available!!!!`, err);
     // });
-	// video.setAttribute('autoplay', '');
-	// video.setAttribute('muted', '');
-	// video.setAttribute('playsinline', '')
-	// video.style.position = "absolute";
-	// video.style.width = renderer.domElement.width;
-	// video.style.height = renderer.domElement.height;
-	// renderer.domElement.style.position = "absolute";
+	video.setAttribute('autoplay', '');
+	video.setAttribute('muted', '');
+	video.setAttribute('playsinline', '')
+	video.style.position = "absolute";
+	video.style.width = renderer.domElement.width;
+	video.style.height = renderer.domElement.height;
+	renderer.domElement.style.position = "absolute";
 
 	document.body.appendChild(video);
 	document.body.appendChild(renderer.domElement);
