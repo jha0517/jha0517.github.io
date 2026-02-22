@@ -1,37 +1,27 @@
-import * as THREE from "./three.js-master/build/three.module.js";
+const THREE = window.MINDAR.IMAGE;
 
 console.log("Three", THREE);
-
 document.addEventListener("DOMContentLoaded", () => {
-  const scene = new THREE.Scene();
+    const start = async() => {
+        const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+            container: document.body,
+            imageTargetSrc: "./assets/mind/targets.mind",
+        });
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+        const { renderer, scene, camera } = mindarThree;
 
-  cube.position.set(0, 0, -5);
-  cube.rotation.set(0, Math.PI/4, 0);
+        const geometry = new THREE.PlaneGeometry(1, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
+        const plane = new THREE.Mesh(geometry, material);
 
-  const camera = new THREE.PerspectiveCamera();
-  camera.position.set(1, 1, 5);
+        const ancher = mindarThree.addAnchor(0);
+        ancher.group.add(plane);
+        
+        await mindarThree.start();
 
-  const renderer = new THREE.WebGLRenderer({alpha: true});
-  renderer.setSize(500, 500);
-  renderer.render(scene, camera);
- 
-  const video = document.createElement("video");
-  navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-	video.srcObject = stream;
-	video.play();
-  });
-  video.style.position = "absolute";
-  video.style.width = renderer.domElement.style.width;
-  video.style.height = renderer.domElement.style.height; 
-  renderer.domElement.style.position = "absolute";
-
-  document.body.appendChild(video);
-  document.body.appendChild(renderer.domElement);
-
-
+        renderer.setAnimationLoop(() => {
+            renderer.render(scene, camera);
+        });
+    }
+    start();
 });
